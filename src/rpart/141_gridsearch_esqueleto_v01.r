@@ -11,7 +11,7 @@ require("parallel")
 
 PARAM <- list()
 # reemplazar por las propias semillas
-PARAM$semillas <- c(111235, 125697, 100533, 666879, 758653)
+PARAM$semillas <- c(111235, 125697, 100533, 500697, 666879)
 
 #------------------------------------------------------------------------------
 # particionar agrega una columna llamada fold a un dataset
@@ -114,35 +114,33 @@ cat(
   sep = "",
   "max_depth", "\t",
   "min_split", "\t",
+  "minbucket", "\t",
+  "cp", "\t",
   "ganancia_promedio", "\n"
 )
 
 
 # itero por los loops anidados para cada hiperparametro
 
-for (vmax_depth in c(4, 6, 8, 10, 12, 14)) {
-  for (vmin_split in c(1000, 800, 600, 400, 200, 100, 50, 20, 10)) {
-    # notar como se agrega
-
-    # vminsplit  minima cantidad de registros en un nodo para hacer el split
-    param_basicos <- list(
-      "cp" = -0.5, # complejidad minima
-      "minsplit" = vmin_split,
-      "minbucket" = 5, # minima cantidad de registros en una hoja
-      "maxdepth" = vmax_depth
-    ) # profundidad máxima del arbol
-
-    # Un solo llamado, con la semilla 17
-    ganancia_promedio <- ArbolesMontecarlo(ksemillas, param_basicos)
-
-    # escribo los resultados al archivo de salida
-    cat(
-      file = archivo_salida,
-      append = TRUE,
-      sep = "",
-      vmax_depth, "\t",
-      vmin_split, "\t",
-      ganancia_promedio, "\n"
-    )
+for (vmax_depth in seq(1,30,3)) {
+  for (minbucket in seq(0,1500,250)) {
+    for (vmin_split in seq(0,3000,250)) {
+      for (cp in seq(-10, 10, 5)){
+        param_basicos <- list(
+          "cp" = cp,
+          "minsplit" = vmin_split,
+          "minbucket" = minbucket,
+          "maxdepth" = vmax_depth
+        )
+        
+        ganancia_promedio <- ArbolesMontecarlo(17, param_basicos)
+        
+        # Formatear la línea a escribir en el archivo
+        linea <- paste(vmax_depth, "\t", minbucket, "\t", vmin_split, "\t", cp, "\t", ganancia_promedio, "\n" )
+        
+        # Escribir la línea en el archivo
+        cat(linea, file = archivo_salida, append = TRUE) 
+      }
+    }
   }
 }
