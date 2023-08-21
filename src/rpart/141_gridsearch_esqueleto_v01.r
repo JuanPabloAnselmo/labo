@@ -133,7 +133,7 @@ for (vmax_depth in seq(1,30,3)) {
           "maxdepth" = vmax_depth
         )
         
-        ganancia_promedio <- ArbolesMontecarlo(PARAM$semillas = , param_basicos)
+        ganancia_promedio <- ArbolesMontecarlo(PARAM$semillas, param_basicos)
         
         # Formatear la línea a escribir en el archivo
         linea <- paste(vmax_depth, "\t", minbucket, "\t", vmin_split, "\t", cp, "\t", ganancia_promedio, "\n" )
