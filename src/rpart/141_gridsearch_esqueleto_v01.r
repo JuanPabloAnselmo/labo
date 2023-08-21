@@ -125,7 +125,7 @@ cat(
 for (vmax_depth in seq(1,30,3)) {
   for (minbucket in seq(0,1500,250)) {
     for (vmin_split in seq(0,3000,250)) {
-      for (cp in seq(-10, 10, 5)){
+      for (cp in c(-0.5, -0.3, 0, 0.2, 0.5, 0.8, 1)){
         param_basicos <- list(
           "cp" = cp,
           "minsplit" = vmin_split,
@@ -133,7 +133,7 @@ for (vmax_depth in seq(1,30,3)) {
           "maxdepth" = vmax_depth
         )
         
-        ganancia_promedio <- ArbolesMontecarlo(17, param_basicos)
+        ganancia_promedio <- ArbolesMontecarlo(PARAM$semillas = , param_basicos)
         
         # Formatear la línea a escribir en el archivo
         linea <- paste(vmax_depth, "\t", minbucket, "\t", vmin_split, "\t", cp, "\t", ganancia_promedio, "\n" )
