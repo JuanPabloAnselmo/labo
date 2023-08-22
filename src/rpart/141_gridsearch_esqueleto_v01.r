@@ -122,10 +122,10 @@ cat(
 
 # itero por los loops anidados para cada hiperparametro
 
-for (vmax_depth in seq(1,30,3)) {
-  for (minbucket in seq(0,1500,250)) {
-    for (vmin_split in seq(0,3000,250)) {
-      for (cp in c(-0.5, -0.3, 0, 0.2, 0.5, 0.8, 1)){
+for (vmax_depth in seq(6,10,1)) {
+  for (minbucket in seq(0,500,25)) {
+    for (vmin_split in seq(0,1000,250)) {
+      for (cp in c(-0.5, -0.3, 1)){
         param_basicos <- list(
           "cp" = cp,
           "minsplit" = vmin_split,
@@ -144,3 +144,5 @@ for (vmax_depth in seq(1,30,3)) {
     }
   }
 }
+
+print("Termino")
