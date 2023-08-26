@@ -33,9 +33,9 @@ particionar <- function(data, division, agrupa = "", campo = "fold", start = 1, 
 #------------------------------------------------------------------------------
 
 ArbolEstimarGanancia <- function(semilla, param_basicos) {
-  particionar(dataset, division = c(7, 3), agrupa = "clase_binaria1", seed = semilla)
+  particionar(dataset, division = c(7, 3), agrupa = "clase_ternaria", seed = semilla)
   
-  modelo <- rpart("clase_binaria1 ~ .",
+  modelo <- rpart("clase_ternaria ~ .",
                   data = dataset[fold == 1],
                   xval = 0,
                   control = param_basicos
@@ -52,9 +52,9 @@ ArbolEstimarGanancia <- function(semilla, param_basicos) {
   
   # Calcula la ganancia para la nueva clasificación binaria
   ganancia_test$ganancia <- ifelse(
-    ganancia_test$clase_predicha == "BAJA+2" & ganancia_test$clase_binaria1 == "BAJA+2",
+    ganancia_test$clase_predicha == "BAJA+2" & ganancia_test$clase_ternaria == "BAJA+2",
     117000,
-    ifelse(ganancia_test$clase_predicha == "BAJA+2" & ganancia_test$clase_binaria1 != "BAJA+2", -3000, 0)
+    ifelse(ganancia_test$clase_predicha == "BAJA+2" & ganancia_test$clase_ternaria != "BAJA+2", -3000, 0)
   )
   
   ganancia_test_normalizada <- sum(ganancia_test$ganancia) / 0.3
@@ -116,7 +116,7 @@ cat(
 for (vmax_depth in seq(6,10,1)) {
   for (minbucket in seq(0,500,25)) {
     for (vmin_split in seq(0,1000,250)) {
-      for (cp in c(-0.5, -0.3, 1)){
+      for (cp in c(-0.5)){
         param_basicos <- list(
           "cp" = cp,
           "minsplit" = vmin_split,

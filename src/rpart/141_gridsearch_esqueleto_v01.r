@@ -78,7 +78,7 @@ ArbolesMontecarlo <- function(semillas, param_basicos) {
     semillas, # paso el vector de semillas
     MoreArgs = list(param_basicos), # aqui paso el segundo parametro
     SIMPLIFY = FALSE,
-    mc.cores = 1
+    mc.cores = 4
   ) # se puede subir a 5 si posee Linux o Mac OS
 
   ganancia_promedio <- mean(unlist(ganancias))
@@ -103,7 +103,7 @@ dataset <- dataset[clase_ternaria != ""]
 # HT  representa  Hiperparameter Tuning
 dir.create("./exp/", showWarnings = FALSE)
 dir.create("./exp/HT2020/", showWarnings = FALSE)
-archivo_salida <- "./exp/HT2020/gridsearch.txt"
+archivo_salida <- "./exp/HT2020/gridsearch_1.txt"
 
 # Escribo los titulos al archivo donde van a quedar los resultados
 # atencion que si ya existe el archivo, esta instruccion LO SOBREESCRIBE,
@@ -125,7 +125,7 @@ cat(
 for (vmax_depth in seq(6,10,1)) {
   for (minbucket in seq(0,500,25)) {
     for (vmin_split in seq(0,1000,250)) {
-      for (cp in c(-0.5, -0.3, 1)){
+      for (cp in c(-0.5, 0.3, 1)){
         param_basicos <- list(
           "cp" = cp,
           "minsplit" = vmin_split,
