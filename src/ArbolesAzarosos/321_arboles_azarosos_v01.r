@@ -11,7 +11,7 @@ require("rpart")
 
 # parmatros experimento
 PARAM <- list()
-PARAM$experimento <- 2000
+PARAM$experimento <- 3210
 
 # Establezco la semilla aleatoria, cambiar por SU primer semilla
 PARAM$semilla <- 111235
@@ -19,9 +19,9 @@ PARAM$semilla <- 111235
 # parameetros rpart
 PARAM$rpart_param <- list(
   "cp" = -1,
-  "minsplit" = 250,
-  "minbucket" = 100,
-  "maxdepth" = 14
+  "minsplit" = 300,
+  "minbucket" = 20,
+  "maxdepth" = 10
 )
 
 # parametros  arbol
